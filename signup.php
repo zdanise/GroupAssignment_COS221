@@ -10,7 +10,7 @@
 
 <body>
     <?php
-    print_r($_POST);
+    //print_r($_POST);
 
     if (isset($_POST["submit"])) {
         $fullname = $_POST["fullname"];
@@ -39,14 +39,14 @@
         }
 
         require_once "database.php";
-        
+
         $sql = "SELECT * FROM users WHERE email = '$email'";
         $result  = mysqli_query($conn, $sql);
         $rowCount = mysqli_num_rows($result);
         if ($rowCount > 0) {
             array_push($errors, "Email already exists");
         }
-        
+
 
         if (count($errors) > 0) {
             foreach ($errors as $error) {
@@ -54,12 +54,12 @@
             }
         } else {
             $sqlQuery = "INSERT INTO users (fullname, email, phonenumber, password) VALUES ( ? , ? , ? , ? )";
-            
+
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt, $sqlQuery);
 
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt,"ssss", $fullname, $email, $phoneNumber, $password_hash);
+                mysqli_stmt_bind_param($stmt, "ssss", $fullname, $email, $phoneNumber, $password_hash);
                 mysqli_stmt_execute($stmt);
                 echo "<div>You have successfully signed up</div>";
             } else {
