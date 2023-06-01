@@ -13,26 +13,22 @@
     //print_r($_POST);
 
     if (isset($_POST["submit"])) {
-        $fullname = $_POST["fullname"];
+        $username = $_POST["username"];
+          $first_name= $_POST["first_name"];
+          $last_name = $_POST["last_name"];
         $email = $_POST["email"];
-        $phoneNumber = $_POST["phoneNumber"];
-        $password = $_POST["password"];
+         $password = $_POST["password"];
         $repeatPassword = $_POST["repeatPassword"];
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         $errors = array();
 
-        if (empty($fullname) or empty($email) or empty($phoneNumber) or empty($password) or empty($repeatPassword)) {
+        if (empty($username) or empty( $first_name)or empty($last_name) or empty($email)  or empty($password) or empty($repeatPassword)) {
             array_push($errors, "Missing information");
+            
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             array_push($errors, "Invalid email");
-        }
-        if (strlen($phoneNumber) !== 10) {
-            array_push($errors, "Phone number must have 10 characters");
-        }
-        if (strlen($password) < 10) {
-            array_push($errors, "Password must be 12 characters long");
         }
         if ($password !== $repeatPassword) {
             array_push($errors, "Passwords do not match");
@@ -53,13 +49,13 @@
                 echo "<div>$error</div>";
             }
         } else {
-            $sqlQuery = "INSERT INTO users (fullname, email, phonenumber, password) VALUES ( ? , ? , ? , ? )";
+            $sqlQuery = "INSERT INTO users (username, first_name, last_name, email,  password) VALUES ( ? , ? , ? , ?,? )";
 
             $stmt = mysqli_stmt_init($conn);
             $prepareStmt = mysqli_stmt_prepare($stmt, $sqlQuery);
 
             if ($prepareStmt) {
-                mysqli_stmt_bind_param($stmt, "ssss", $fullname, $email, $phoneNumber, $password_hash);
+                mysqli_stmt_bind_param($stmt, "sssss", $username, $first_name, $last_name, $email,  $password);
                 mysqli_stmt_execute($stmt);
                 echo "<div>You have successfully signed up</div>";
             } else {
@@ -71,14 +67,18 @@
     <div class="Container">
         <form action="signup.php" method="POST">
             <div>
-                <input type="text" name="fullname" placeholder="Full name:">
+                <input type="text" name="username" placeholder="Username:">
+            </div>
+            <div>
+                <input type="text" name="first_name" placeholder="First Name:">
+            </div>
+            <div>
+                <input type="text" name="last_name" placeholder="Last Name:">
             </div>
             <div>
                 <input type="text" name="email" placeholder="Email:">
             </div>
-            <div>
-                <input type="text" name="phoneNumber" placeholder="Phone number:">
-            </div>
+          
             <div>
                 <input type="text" name="password" placeholder="Password:">
             </div>
