@@ -5,29 +5,7 @@
       padding: 0;
       font-family: Arial, sans-serif;
     }
-
-    /* Navbar styles */
-    nav {
-      background-color: #333;
-      padding: 10px;
-      color: #fff;
-    }
-
-    nav ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    nav ul li {
-      display: inline;
-    }
-
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px;
-    }
+    
 
     /* Wine list styles */
     .wine-list {

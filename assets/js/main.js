@@ -30,19 +30,3 @@ function linkAction(){
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
 
-/*==================== CHANGE BACKGROUND HEADER ====================*/
-function scrollHeader(){
-    const header = document.getElementById('header')
-    if (this.scrollY >= 100) {
-        header.classList.add('scroll-header');
-        document.getElementById('icon').style.color="#654b42";
-        document.getElementById('logo').src="assets/img/logoblack.png";
-      } else {
-        header.classList.remove('scroll-header');
-        document.getElementById('icon').style.color="white";
-        document.getElementById('logo').src="assets/img/logo.png";
-    }
-      
-}
-window.addEventListener('scroll', scrollHeader)
-
