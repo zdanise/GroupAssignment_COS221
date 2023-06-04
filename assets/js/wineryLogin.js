@@ -13,7 +13,9 @@ const login = document.getElementById("btnLogin");
 
 //=============User SignUp elements======================
 const iName = document.getElementById('iSignName');
+const iType = document.getElementById('iSignType');
 const iLocation = document.getElementById('iSignLocation');
+const iEmail = document.getElementById('iSignEmail');
 const iPassword = document.getElementById('iSignPassword');
 const signUp = document.getElementById("btnSignUp");
 //======end=======User SignUp elements========end==============
@@ -70,23 +72,42 @@ signUp.addEventListener('click', ()=>{
         iName.focus();
     }
     else{
-        if(iLocation.value.length < 2 || iLocation.value.match(nameRegex))
+        if(iType.value.length < 2 || iType.value.match(nameRegex))
         {
             Alert.classList.remove('hide');
             Alert.classList.add('show');   
-            message.innerHTML = 'Location must contain more than 1 characters within [A-Z,a-z]';
-            iLocation.focus();
+            message.innerHTML = 'Type must contain more than 1 characters within [A-Z,a-z]';
+            iType.focus();
         }
         else{
-            if(!iPassword.value.match(passwordRegex))
+            if(iLocation.value.length < 2 || iLocation.value.match(nameRegex))
             {
                 Alert.classList.remove('hide');
                 Alert.classList.add('show');   
-                message.innerHTML = 'Invalid password. Password must be 6-15 characters and contain each of these:\nLower case letter\nUpper case letter\nNumerical digit\nAnd special character';
-                iPassword.focus();
+                message.innerHTML = 'Location must contain more than 1 characters within [A-Z,a-z]';
+                iLocation.focus();
             }
             else{
+                if(iEmail.value.length < 1 || !iEmail.value.match(emailRegex))
+                {
+                    Alert.classList.remove('hide');
+                    Alert.classList.add('show');   
+                    message.innerHTML = 'Invalid Email';
+                    iEmail.focus();
+                }
+                else{
 
+                    if(!iPassword.value.match(passwordRegex))
+                    {
+                        Alert.classList.remove('hide');
+                        Alert.classList.add('show');   
+                        message.innerHTML = 'Invalid password. Password must be 6-15 characters and contain each of these:\nLower case letter, Upper case letter, Numerical digit, and a special character';
+                        iPassword.focus();
+                    }
+                    else{
+
+                    }
+                }
                //check with db through api if there already exist such a winery
             }
         }
