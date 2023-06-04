@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="assets/img/logoblack.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b97e6c1694.js" crossorigin="anonymous"></script>
+    <title>Destinations</title>
+</head>
+<body>
+    <div class="loader">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div id="header-container"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(function() {
+    $("#header-container").load("header.html", function() {
+        $('#destinations').addClass('active-link');
+    });
+    // $("#swiper").hide();
+    });
+    </script>
+
+
+
+    <!--==================== ABOUT ====================-->
+    <section class="about section" id="about">
+        <!-- <img src="assets/img/home1.jpg" alt="" class="home__img"> -->
+        <div class="about__container container grid">
+            <div class="about__data">
+                <h2 class="section__title about__title">About Wineries</h2>
+                <p class="about__description">Discover the finest wineries around the world where you can indulge in exquisite wines and breathtaking vineyard landscapes. Immerse yourself in the art of winemaking and embark on a sensory journey like no other. Whether you're a seasoned wine connoisseur or a passionate enthusiast, we have curated a selection of wineries that offer unique experiences and exceptional flavors. Join us on a wine adventure and savor the essence of each vineyard as you taste their finest creations. Book your winery tour now and let us guide you through an unforgettable oenophile's paradise.</p>
+                <div class="button" onclick="openPopup()">Explore places</div>
+                <div id="popup" class="popup">
+                    <div class="popup-content">
+                        <span class="close" onclick="closePopup()">&times;</span>
+                        <h2>Wineries</h2>
+                        <input type="text" id="search" placeholder="Search...">
+                        <select id="combo">
+                            <option value="All">All</option>
+                            <option value="destination">B&B Wineries</option>
+                            <option value="Farm">Farm Wineries</option>
+                            <option value="vineyard">Reservation Wineries</option>
+                        </select>
+                        <button onclick="submitSelection()">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about__img">
+                <div class="about__img-overlay">
+                    <video class="about__img-one" loop muted autoplay="autoplay">
+                        <source src="assets/video/1.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="about__img-overlay">
+                    <video class="about__img-two" loop muted autoplay="autoplay">
+                        <source src="assets/video/2.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!--==================== DISCOVER ====================-->
+    <section id="swiper">
+        <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+              <!-- Slides -->
+              <div class="swiper-slide discover__card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="https://images.unsplash.com/photo-1543418219-44e30b057fea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHZpbmV5YXJkfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" alt="" class="discover__img">
+                        <div class="discover__data">
+                            <h2 class="discover__title">Hawaii</h2>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <p>This is the back of the card.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide discover__card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="https://images.unsplash.com/photo-1596142332133-327e2a0ff006?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dmluZXlhcmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=60" alt="" class="discover__img">
+                        <div class="discover__data">
+                            <h2 class="discover__title">Hawaii</h2>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <p>This is the back of the card.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide discover__card" onclick="flipCard(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmluZXlhcmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=60" alt="" class="discover__img">
+                        <div class="discover__data">
+                            <h2 class="discover__title">Hawaii</h2>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <p>This is the back of the card.</p>
+                    </div>
+                </div>
+            </div>
+              
+            
+            </div>
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev swipers"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+    </section>
+    
+
+    <!--==================== EXPERIENCE ====================-->
+    <section class="experience section">
+        <h2 class="section__title">With Our Experience <br> We Will Serve You</h2>
+
+        <div class="experience__container container grid">
+            <div class="experience__content grid">
+                <div class="experience__data">
+                    <h2 class="experience__number">2</h2>
+                    <span class="experience__description">Year <br> Experience</span>
+                </div>
+
+                <div class="experience__data">
+                    <h2 class="experience__number">World wide</h2>
+                    <span class="experience__description">Winery <br> destinations</span>
+                </div>
+
+                <div class="experience__data">
+                    <h2 class="experience__number">650+</h2>
+                    <span class="experience__description">Tourist <br> Attractions</span>
+                </div>
+            </div>
+
+            <div class="video__content">
+                <video id="video-file" loop muted autoplay="autoplay">
+                    <source src="assets/video/4.mp4" type="video/mp4">
+                </video>
+                <video id="video-file" loop muted autoplay="autoplay">
+                    <source src="assets/video/3.mp4" type="video/mp4">
+                </video>
+            </div> 
+        </div>
+    </section>
+
+    <script src="assets/js/main.js"></script>
+    <link rel="stylesheet" href="assets/css/pop.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        });
+    </script>
+    
+    
+    
+</body>
+</html>

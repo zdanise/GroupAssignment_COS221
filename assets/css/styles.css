@@ -6,17 +6,15 @@
   --header-height: 3rem;
 
   /*========== Colors ==========*/
-  /* Change favorite color to match images */
-  /*Green dark 190 - Green 171 - Grren Blue 200*/
-  --hue-color: 190;
 
   /* HSL color mode */
   --first-color:#535154;
   --title-color: #654b42;
   --text-color: #654b42;
   --white-color: #FFF;
-  --scroll-bar-color: #9f7f73;
-  --scroll-thumb-color: #654b42;
+  --scroll-bar-color: white;
+  --scroll-thumb-color: rgba(83, 81, 84, 0.7);
+
 
   /*========== Font and typography ==========*/
   --body-font: 'Open Sans', sans-serif;
@@ -179,7 +177,8 @@ input {
   top: 0;
   left: 0;
   z-index: var(--z-fixed);
-  background-color: transparent;
+  height: fit-content;
+  background: rgba(0,0, 0, 0.5);
 }
 
 /*=============== NAV ===============*/
@@ -190,10 +189,15 @@ input {
   align-items: center;
 }
 
+.logo{
+  width: 9%;
+}
+
 
 .nav__toggle {
   font-size: 1.2rem;
   cursor: pointer;
+  color: var(--white-color);
 }
 
 .nav__menu {
@@ -203,12 +207,12 @@ input {
 @media screen and (max-width: 767px) {
   .nav__menu {
     position: fixed;
-    background-color: var(--body-color);
+    background-color:  rgba(0,0, 0, 0.5);
     top: 0;
     right: -100%;
     width: 70%;
     height: 100%;
-    box-shadow: -1px 0 4px rgba(14, 55, 63, 0.15);
+    box-shadow: -1px 0 4px rgba(0, 0, 0, 0.15);
     padding: 3rem;
     transition: .4s;
   }
@@ -221,13 +225,13 @@ input {
 }
 
 .nav__link {
-  color: var(--text-color-light);
+  color: var(--white-color);
   font-weight: var(--font-semi-bold);
   text-transform: uppercase;
 }
 
 .nav__link:hover {
-  color: var(--text-color);
+  color: var(--white-color);
 }
 
 .nav__close {
@@ -242,14 +246,14 @@ input {
 /* show menu */
 .show-menu {
   right: 0;
-  background-color: #535154;
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
 }
 
 /* Change background header */
 .scroll-header {
   /* background-color: var(--body-color); */
-  box-shadow: 0 0 4px rgba(14, 55, 63, 0.15);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
 }
 
 .scroll-header .nav__logo,
@@ -367,18 +371,225 @@ input {
   column-gap: .25rem;
 }
 
-.button--link {
-  background: none;
-  padding: 0;
+
+/*=============== ABOUT ===============*/
+.about__data {
+  text-align: center;
 }
 
-.button--link:hover {
-  background: none;
+.about__container {
+  row-gap: 2.5rem;
 }
 
-.video_section{
-  padding-top: 2%;
+.about__description {
+  margin-bottom: var(--mb-2);
 }
+
+.about__img {
+  display: flex;
+  column-gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.about__img-overlay {
+  overflow: var(--img-hidden);
+}
+
+.about__img-one {
+  width: 130px;
+}
+
+.about__img-two {
+  width: 180px;
+}
+
+.about__img-one, 
+.about__img-two {
+  transition: var(--img-transition);
+}
+
+.about__img-one:hover, 
+.about__img-two:hover {
+  transform: var(--img-scale);
+}
+
+/*=============== DISCOVER ===============*/
+/* Add the following CSS styles to your existing stylesheet */
+
+.swiper-slide.discover__card {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  border-top:solid thin rgba(0, 0, 0, 0.15);
+  border-bottom:solid thin rgba(0, 0, 0, 0.15);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.discover__description {
+  display: block;
+  font-size: var(--smaller-font-size);
+}
+
+.swiper {
+  width: 600px;
+  height: 300px;
+}
+
+.discover__card {
+  /* position: relative; */
+  width: 200px;
+  overflow: var(--img-hidden);
+}
+
+.discover__data {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1rem;
+}
+
+.discover__title,
+.discover__description {
+  color: var(--white-color);
+}
+
+.discover__title {
+  font-size: var(--h3-font-size);
+  margin-bottom: var(--mb-0-25);
+}
+
+.discover__img {
+  background: url("assets/img/discover2.jpg") no-repeat center center/cover;
+  transition: var(--img-transition);
+  width: 100%;
+  height: 100%;
+}
+
+.discover__img:hover {
+  transform: var(--img-scale);
+}
+
+.discover__card {
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.discover__data {
+  backface-visibility: hidden;
+}
+
+.discover__back {
+  transform: rotateY(180deg);
+  display: none;
+}
+
+
+/*=============== EXPERIENCE ===============*/
+.experience__container {
+  row-gap: 2.5rem;
+  justify-content: center;
+  justify-items: center;
+}
+
+.experience__content {
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1rem;
+  justify-items: center;
+  padding: 0 2rem;
+}
+
+.experience__number {
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+  margin-bottom: var(--mb-0-5);
+}
+
+.experience__description {
+  font-size: var(--small-font-size);
+}
+
+.experience__img {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.experience__img-one, 
+.experience__img-two {
+  transition: var(--img-transition);
+}
+
+.experience__img-one:hover, 
+.experience__img-two:hover {
+  transform: var(--img-scale);
+}
+
+.experience__overlay {
+  overflow: var(--img-hidden);
+}
+
+.experience__overlay:nth-child(1) {
+  width: 263px;
+  margin-right: 2rem;
+}
+
+.experience__overlay:nth-child(2) {
+  width: 120px;
+  position: absolute;
+  top: 2rem;
+  right: 0;
+}
+
+/*=============== VIDEO ===============*/
+.video__container {
+  padding-bottom: 1rem;
+}
+
+.video__description {
+  text-align: center;
+  margin-bottom: var(--mb-2-5);
+}
+
+.video__content {
+  position: relative;
+}
+
+.video__button {
+  position: absolute;
+  right: 1rem;
+  bottom: -1rem;
+  padding: 1rem 1.5rem;
+}
+
+.video__button-icon {
+  font-size: 1.2rem;
+}
+
+
+
 /*=============== FOOTER ===============*/
 
 .footer__rights {
@@ -386,7 +597,6 @@ input {
   flex-direction: column;
   row-gap: 1.5rem;
   text-align: center;
-  padding-top: 2%;
 }
 
 .footer__copy, .footer__terms-link {
@@ -418,6 +628,11 @@ input {
 }
 
 
+.scrollup__icon {
+  color: var(--white-color);
+  font-size: 1.2rem;
+}
+
 /* Show scroll */
 .show-scroll {
   bottom: 5rem;
@@ -431,10 +646,6 @@ input {
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--scroll-thumb-color);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--text-color-light);
 }
 
 /*=============== MEDIA QUERIES ===============*/
@@ -542,6 +753,46 @@ input {
   .home__info {
     bottom: 3rem;
   }
+  .about__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+  }
+  .about__data, .about__title {
+    text-align: initial;
+  }
+  .about__title {
+    margin-bottom: var(--mb-1-5);
+  }
+  .about__description {
+    margin-bottom: var(--mb-2);
+  }
+  .discover__container {
+    width: 610px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .discover__container,
+  .place__container {
+    padding-top: 2rem;
+  }
+  .experience__overlay:nth-child(1) {
+    width: 363px;
+    margin-right: 4rem;
+  }
+  .experience__overlay:nth-child(2) {
+    width: 160px;
+  }
+  .subscribe__bg {
+    background: none;
+    padding: 0;
+  }
+  .subscribe__container {
+    background-color: var(--first-color-second);
+    padding: 3.5rem 0;
+  }
+  .subscribe__input {
+    padding: 0 .5rem;
+  }
   .footer__rights {
     flex-direction: row;
     justify-content: space-between;
@@ -550,6 +801,11 @@ input {
 
 /* For large devices */
 @media screen and (min-width: 1024px) {
+  .header {
+    height: 13.5%;
+
+  }
+  
   .container {
     margin-left: auto;
     margin-right: auto;
@@ -568,11 +824,48 @@ input {
   .home__info-img {
     width: 240px;
   }
+  .about__img-one {
+    width: 230px;
+  }
+  .about__img-two {
+    width: 290px;
+  }
+  .discover__card {
+    width: 237px;
+  }
+  .discover__container {
+    width: 700px;
+  }
+  .discover__data {
+    left: 1.5rem;
+    bottom: 2rem;
+  }
+  .discover__title {
+    font-size: var(--h2-font-size);
+  }
+  .experience__content {
+    margin: var(--mb-1) 0;
+    column-gap: 3.5rem;
+  }
+  .experience__overlay:nth-child(1) {
+    width: 463px;
+    margin-right: 7rem;
+  }
+  .experience__overlay:nth-child(2) {
+    width: 220px;
+    top: 3rem;
+  }
   .video__container {
     grid-template-columns: .7fr;
   }
   .video__description {
     padding: 0 8rem;
+  }
+  .place__container {
+    gap: 3rem 2rem;
+  }
+  .place__card, .place__img {
+    height: 263px;
   }
   .footer__content {
     justify-items: center;
@@ -594,4 +887,3 @@ input {
     height: 640px;
   }
 }
-
