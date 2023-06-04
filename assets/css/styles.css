@@ -417,13 +417,51 @@ input {
 /*=============== DISCOVER ===============*/
 /* Add the following CSS styles to your existing stylesheet */
 
+.swiper-slide.discover__card {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  border-top:solid thin rgba(0, 0, 0, 0.15);
+  border-bottom:solid thin rgba(0, 0, 0, 0.15);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.discover__description {
+  display: block;
+  font-size: var(--smaller-font-size);
+}
+
 .swiper {
   width: 600px;
   height: 300px;
 }
 
 .discover__card {
-  position: relative;
+  /* position: relative; */
   width: 200px;
   overflow: var(--img-hidden);
 }
@@ -434,7 +472,8 @@ input {
   left: 1rem;
 }
 
-.discover__title{
+.discover__title,
+.discover__description {
   color: var(--white-color);
 }
 
@@ -443,14 +482,32 @@ input {
   margin-bottom: var(--mb-0-25);
 }
 
-
 .discover__img {
+  background: url("assets/img/discover2.jpg") no-repeat center center/cover;
   transition: var(--img-transition);
+  width: 100%;
+  height: 100%;
 }
 
 .discover__img:hover {
   transform: var(--img-scale);
 }
+
+.discover__card {
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.discover__data {
+  backface-visibility: hidden;
+}
+
+.discover__back {
+  transform: rotateY(180deg);
+  display: none;
+}
+
+
 /*=============== EXPERIENCE ===============*/
 .experience__container {
   row-gap: 2.5rem;
