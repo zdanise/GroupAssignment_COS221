@@ -12,19 +12,15 @@ if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
 
-$sql = 'SELECT wine_name, wine_type, image, prices FROM wine ORDER BY RAND()   LIMIT 10';
+$sql = 'SELECT * FROM wine';
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $wines = [];
     while ($row = $result->fetch_assoc()) {
-        $wines[] = [
-            'name' => $row['wine_name'],
-            'type' => $row['wine_type'],
-            'image_url' => $row['image'],
-        ];
+        $wines[] =$row;
     }
-  
+
     header('Content-Type: application/json');
     echo json_encode($wines);
 } else {
