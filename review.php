@@ -6,7 +6,7 @@
 $json = json_decode(file_get_contents('php://input'), true);
 $servername = "127.0.0.1";
 $username = "root";
-$password = "Tails!=Heads";
+$password = "";
 $dbname = "gws_group27vs4"; //please make sure the database name is the same
 $conn = new mysqli($servername, $username, $password, $dbname);
 

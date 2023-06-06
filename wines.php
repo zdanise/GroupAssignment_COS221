@@ -5,7 +5,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 $servername = '127.0.0.1';
 $username = 'root';
-$password = 'Tails!=Heads';
+$password = '';
 $dbname = 'gws_group27vs4';
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {

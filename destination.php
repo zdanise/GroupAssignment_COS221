@@ -3,7 +3,7 @@ $ddata = file_get_contents('php://input');
 $data = json_decode($ddata);
 $servername = "127.0.0.1";
 $username = "root";
-$password = "Tails!=Heads";
+$password = "";
 $dbname = "gws_group27vs4";   //check to see you using the right database name
 $conn = new mysqli($servername, $username, $password, $dbname);
 $searchfor='';
