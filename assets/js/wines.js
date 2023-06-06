@@ -1,8 +1,8 @@
-let wines=[];
-let orderby='ASC';
-let sortby='wine_name';
-let searchby='';
-let filterby='';
+wines={};
+orderby='ASC';
+sortby='wine_name';
+searchby='';
+filterby='';
 function fetchData() {
     var xhr = new XMLHttpRequest();
     let data = {
@@ -21,7 +21,6 @@ function fetchData() {
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.response);
             $('#row2').empty();
             wines = {};
             if (xhr.response == 'No wines found') {
@@ -55,7 +54,7 @@ function loadWines(wine) {
     row2.append('<div class="col-md-4"> \
     <div class="card mb-4 product-wap rounded-0"> \
         <div class="card rounded-0"> \
-            <img class="card-img rounded-0 img-fluid" style="width: 300px;" src='+wine.image+'> \
+            <img class="card-img rounded-0 img-fluid" style="width: 300px; max-height: 700px" src='+wine.image+'> \
             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"> \
                 <ul class="list-unstyled"> \
                     <li><a class="btn btn-success text-white mt-2" href="shop-single.html?user_id=' + user_id + '&wine=' + encodeURIComponent(JSON.stringify(wine)) + '"><i class="far fa-eye"></i></a></li> \
@@ -95,14 +94,17 @@ function addToCart(wine_id, amount=1){
         dataType: "json",
         contentType: "application/json",
         success: function(response) {
-            $("#successModal").modal("show");
-            setTimeout(function() {
-              $("#successModal").modal("hide"); 
-            }, 1250);
+          var toast = document.getElementById("successToast");
+          var bsToast = new bootstrap.Toast(toast);
+          bsToast.show();
+          setTimeout(()=>{bsToast.hide();},1000);
         },
         error: function(xhr, status, error) {
         }
       });
+      
+      
+
       
 }
 
@@ -110,6 +112,56 @@ function addWithQ(){
     var quantityInput = document.getElementById("quantity");
     var quantity = quantityInput.value;
     addToCart(wine.wine_id,quantity);
+}
+
+function onSuccess(response){
+    var reviews = response.data;
+    console.log(response);
+    var html = '';
+    if (response.message==undefined){
+
+        reviews.forEach((element) => {
+        var rating = element.rate;
+        var comment = element.comment;
+        var username= element.username;
+        average= element.average_rate;
+        html += '<p><b>User:</b> '+username+'<br> <b>Rating:</b> ' + rating + '<br> <b>Comment:</b> ' + comment + '<br>------<br></p>';
+        });
+        $('#average').html('Average rating: '+average);
+    } 
+    else{
+        html += '<p>'+response.message+'<br></p>';
+    }
+    $('#comments').html(html);
+}
+
+function submitReview(){
+    var comment = document.getElementById("comment").value.trim();
+    var rate = document.getElementById("rate").value;
+    var data = {
+        AddReview:"yes",
+        comment: comment,
+        rate: rate,
+        wine_id: wine.wine_id,
+        user_id: user_id
+      };
+      
+      console.log(data);
+      
+      $.ajax({
+        url: 'review.php',
+        type: 'POST',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function(response) {
+          onSuccess(response);
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+      
 }
 
 function setSort(i){

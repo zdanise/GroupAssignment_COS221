@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="storeAssets/css/bootstrap.min.css">
     <link rel="stylesheet" href="storeAssets/css/templatemo.css">
 
-    <!-- Load fonts style after rendering the layout styles -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <script src="https://kit.fontawesome.com/b97e6c1694.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -83,10 +83,25 @@
                         </ul>                        
                     </div>
                     <div class="col-md-6 pb-4">
-                        <div class="d-flex" style="justify-content: space-evenly;">
-                            <input id="search" type="search" placeholder="Enter search..." id="searchbar" style="border-bottom:rgba(83, 81, 84, 0.7) solid thin; width: 90%;">
-                            <i class="fa-solid fa-magnifying-glass" style="color: rgba(83, 81, 84, 0.7)" onclick="setSearch()"></i>
-                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="searchButton" id="search">
+                            <button class="btn btn-primary" type="button" id="searchButton" onclick="setSearch()">Search</button>
+                            <style> 
+                                .form-control { 
+                                    border-color: rgba(83, 81, 84,0.3) !important; 
+                                } 
+                                .form-control:focus { 
+                                    box-shadow: 0 0 0 0 transparent !important; 
+                                } 
+                                .btn.btn-primary { 
+                                    border-color: rgba(83, 81, 84,0.3) !important; 
+                                    background-color: rgba(83, 81, 84,0.7) !important; 
+                                } 
+                                .btn.btn-primary { 
+                                    box-shadow: 0 0 0 0 transparent !important; 
+                                } 
+                            </style>
+                          </div>
                     </div>
                 </div>
                 <div class="row" id="row2">
@@ -97,19 +112,16 @@
     </div>
     <!-- End Content -->
 
-    <!-- Modal Popup -->
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="successModalLabel">Items Added</h5>
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Success</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <p>Item have been added to the cart.</p>
+        <div class="toast-body">
+          Your item has been added to the cart.
         </div>
-      </div>
     </div>
-    </div>
+      
   
 
 

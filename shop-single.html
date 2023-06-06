@@ -14,29 +14,30 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="storeAssets/css/fontawesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="storeAssets/css/slick.min.css">
     <link rel="stylesheet" type="text/css" href="storeAssets/css/slick-theme.css">
     <script src="https://kit.fontawesome.com/b97e6c1694.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/js/wines.js"></script>
+    
 
 </head>
 
 <body>
-    <!-- Modal Popup -->
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="successModalLabel">Items Added</h5>
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Success</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-            <p>Item have been added to the cart.</p>
+        <div class="toast-body">
+          Your item has been added to the cart.
         </div>
-        </div>
-    </div>
-    </div>
+      </div>
+      
+
     <div id="header-container"></div>
     <script>
     $(function() {
@@ -49,8 +50,8 @@
       
       
     <section class="bg-light" style="display: flex; flex-direction: row;">
-        <div class="card mb-3" style="width: 300px; ">
-            <img class="card-img img-fluid" id="image" src="storeAssets/img/product_single_10.jpg" alt="Card image cap" id="product-detail">
+        <div class="card mb-3">
+            <img  style="width: 300px; max-height: 700px;" class="card-img img-fluid" id="image" src="storeAssets/img/product_single_10.jpg" alt="Card image cap" id="product-detail">
         </div>
         <div class="card-body">
             <h1 class="h2" id="name">Active Wear</h1>
@@ -69,7 +70,7 @@
                     <p class="text-muted" id=""><strong id="size">750ml</strong></p>
                 </li>
             </ul>
-            <input type="number" style="width: 50px;" max="5" min="1" value="1" id="quantity">
+            <input type="number" style="width: 50px;" min="1" value="1" id="quantity">
             <a class="btn btn-success text-white mt-2"><i class="fas fa-cart-plus" onclick="addWithQ()"></i></a>
             <style>
                 .btn.btn-success.text-white {
@@ -81,18 +82,20 @@
 
             </style>
             <p class="py-2">
-                <input type="number" style="width: 50px;" max="5" min="0" value="0">
-                <input type="text" placeholder="Enter comment...">
-                <button type="button" class="btn btn-secondary">Submit</button>
+                <input type="number" style="width: 50px;"  min="0" max="10" value="0" id="rate">
+                <input type="text" placeholder="Enter comment..." id="comment">
+                <button type="button" class="btn btn-secondary" onclick="submitReview()">Submit</button>
             </p>
+            <p id="average"></p>
             <h6>Latest comments</h6>
-            <div id="comments">
+            <div id="comments" style="box-shadow: -1px 0 4px rgba(0, 0, 0, 0.15);">
                 <p>first <br> second</p>
             </div>
             
             
         </div>
     </section>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const user = urlParams.get('user_id');
@@ -111,20 +114,7 @@
             dataType: 'json',
             contentType: 'application/json',
             success: function(response) {
-                var reviews = response.data;
-                var html = '';
-                if (reviews!=undefined){
-                    reviews.forEach((element) => {
-                    console.log(element);
-                    var rating = element.rate;
-                    var comment = element.COMMENT;
-                    var username= element.username;
-                    html += '<p><b>User:</b> '+username+'<br> <b>Rating:</b> ' + rating + '<br> <b>Comment:</b> ' + comment + '<br>------<br></p>';
-                    });
-                } 
-
-                console.log(html);
-                $('#comments').html(html);
+                onSuccess(response);
             },
             error: function(xhr, status, error) {
                 console.error(error);
