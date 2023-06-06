@@ -1,22 +1,36 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               8.0.33 - MySQL Community Server - GPL
+-- Server OS:                    Win64
+-- HeidiSQL Version:             12.5.0.6677
+-- --------------------------------------------------------
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS `gws_group27vs4` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+
+-- Dumping database structure for gws_group27vs4
+DROP DATABASE IF EXISTS `gws_group27vs4`;
+CREATE DATABASE IF NOT EXISTS `gws_group27vs4` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `gws_group27vs4`;
 
+-- Dumping structure for table gws_group27vs4.corporate_customer
+DROP TABLE IF EXISTS `corporate_customer`;
 CREATE TABLE IF NOT EXISTS `corporate_customer` (
-  `customer_id` int(11) NOT NULL,
-  `company_name` varchar(255) NOT NULL,
+  `customer_id` int NOT NULL,
+  `company_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`customer_id`),
   CONSTRAINT `corporate_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `corporate_customer` DISABLE KEYS */;
-INSERT IGNORE INTO `corporate_customer` (`customer_id`, `company_name`) VALUES
+-- Dumping data for table gws_group27vs4.corporate_customer: ~18 rows (approximately)
+REPLACE INTO `corporate_customer` (`customer_id`, `company_name`) VALUES
 	(1, 'Herb Random '),
 	(2, 'Cellar Random'),
 	(3, 'Et Cetera Co.'),
@@ -35,21 +49,22 @@ INSERT IGNORE INTO `corporate_customer` (`customer_id`, `company_name`) VALUES
 	(16, 'House of wines'),
 	(17, 'Wine Farmology'),
 	(18, 'Capetown Diners');
-/*!40000 ALTER TABLE `corporate_customer` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.customer
+DROP TABLE IF EXISTS `customer`;
 CREATE TABLE IF NOT EXISTS `customer` (
-  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `phone` varchar(255) DEFAULT NULL,
-  `address` varchar(255) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `customer_id` int NOT NULL AUTO_INCREMENT,
+  `phone` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`customer_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
-  CONSTRAINT `CHK_Customer_PhoneFormat` CHECK (`phone` regexp '^[0-9]{10}$')
+  CONSTRAINT `CHK_Customer_PhoneFormat` CHECK (regexp_like(`phone`,_utf8mb4'^[0-9]{10}$'))
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT IGNORE INTO `customer` (`customer_id`, `phone`, `address`, `user_id`) VALUES
+-- Dumping data for table gws_group27vs4.customer: ~18 rows (approximately)
+REPLACE INTO `customer` (`customer_id`, `phone`, `address`, `user_id`) VALUES
 	(1, '0728456390', '3105 Calle de Alcalá', 38),
 	(2, '0837564893', '6031 Esplanade du 9 Novembre 1989', 12),
 	(3, '0926473637', '2165 Lerdalsfaret', 32),
@@ -68,17 +83,18 @@ INSERT IGNORE INTO `customer` (`customer_id`, `phone`, `address`, `user_id`) VAL
 	(16, '0785437888', '7710 H Roland Holststraat', 35),
 	(17, '0874366662', '3115 Mihaylivskiy provulok', 5),
 	(18, '0736734529', '7282 Tahmelantie', 29);
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.destination_winery
+DROP TABLE IF EXISTS `destination_winery`;
 CREATE TABLE IF NOT EXISTS `destination_winery` (
-  `winery_id` int(11) NOT NULL,
-  `BnB_Name` text DEFAULT NULL,
+  `winery_id` int NOT NULL,
+  `BnB_Name` text COLLATE utf8mb4_general_ci,
   KEY `winery_id` (`winery_id`),
   CONSTRAINT `destination_winery_ibfk_1` FOREIGN KEY (`winery_id`) REFERENCES `winery` (`winery_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `destination_winery` DISABLE KEYS */;
-INSERT IGNORE INTO `destination_winery` (`winery_id`, `BnB_Name`) VALUES
+-- Dumping data for table gws_group27vs4.destination_winery: ~9 rows (approximately)
+REPLACE INTO `destination_winery` (`winery_id`, `BnB_Name`) VALUES
 	(4, 'Cellar View Bed & Breakfast'),
 	(20, 'Cellar Creek Guest House'),
 	(24, 'Oakwood Lodge'),
@@ -88,52 +104,55 @@ INSERT IGNORE INTO `destination_winery` (`winery_id`, `BnB_Name`) VALUES
 	(30, 'Wine Lover\'s Sanctuary'),
 	(32, 'Wine Country Chalet'),
 	(11, 'Wine Lovers Nest');
-/*!40000 ALTER TABLE `destination_winery` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.farm_winery
+DROP TABLE IF EXISTS `farm_winery`;
 CREATE TABLE IF NOT EXISTS `farm_winery` (
-  `winery_id` int(11) NOT NULL,
-  `family_name` varchar(255) DEFAULT NULL,
+  `winery_id` int NOT NULL,
+  `family_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`winery_id`),
   CONSTRAINT `farm_winery_ibfk_1` FOREIGN KEY (`winery_id`) REFERENCES `winery` (`winery_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `farm_winery` DISABLE KEYS */;
-INSERT IGNORE INTO `farm_winery` (`winery_id`, `family_name`) VALUES
+-- Dumping data for table gws_group27vs4.farm_winery: ~6 rows (approximately)
+REPLACE INTO `farm_winery` (`winery_id`, `family_name`) VALUES
 	(1, 'Smith'),
 	(5, 'Brown'),
 	(6, 'Davis'),
 	(10, 'Taylor'),
 	(14, 'Harris'),
 	(17, 'Young');
-/*!40000 ALTER TABLE `farm_winery` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.farm_winery_restaurants
+DROP TABLE IF EXISTS `farm_winery_restaurants`;
 CREATE TABLE IF NOT EXISTS `farm_winery_restaurants` (
-  `winery_id` int(11) NOT NULL,
-  `restaurant_name` varchar(255) NOT NULL DEFAULT '',
+  `winery_id` int NOT NULL,
+  `restaurant_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`restaurant_name`,`winery_id`),
   KEY `FK_farm_winery_restaurants_winery` (`winery_id`),
   CONSTRAINT `FK_farm_winery_restaurants_winery` FOREIGN KEY (`winery_id`) REFERENCES `winery` (`winery_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `farm_winery_restaurants` DISABLE KEYS */;
-INSERT IGNORE INTO `farm_winery_restaurants` (`winery_id`, `restaurant_name`) VALUES
-	(10, 'Barrel  & Vine Restaurant '),
-	(5, 'Cellar Bistro'),
-	(17, 'Corked Bistro'),
+-- Dumping data for table gws_group27vs4.farm_winery_restaurants: ~6 rows (approximately)
+REPLACE INTO `farm_winery_restaurants` (`winery_id`, `restaurant_name`) VALUES
 	(1, 'Grapevine Bistro'),
+	(5, 'Cellar Bistro'),
 	(6, 'The Winery Table'),
-	(14, 'Vines & Grains Eatery');
-/*!40000 ALTER TABLE `farm_winery_restaurants` ENABLE KEYS */;
+	(10, 'Barrel  & Vine Restaurant '),
+	(14, 'Vines & Grains Eatery'),
+	(17, 'Corked Bistro');
 
+-- Dumping structure for table gws_group27vs4.individual_customer
+DROP TABLE IF EXISTS `individual_customer`;
 CREATE TABLE IF NOT EXISTS `individual_customer` (
-  `customer_id` int(11) NOT NULL,
-  `age` int(11) NOT NULL DEFAULT 21,
+  `customer_id` int NOT NULL,
+  `age` int NOT NULL DEFAULT '21',
   PRIMARY KEY (`customer_id`),
   CONSTRAINT `individual_customer_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `individual_customer` DISABLE KEYS */;
-INSERT IGNORE INTO `individual_customer` (`customer_id`, `age`) VALUES
+-- Dumping data for table gws_group27vs4.individual_customer: ~18 rows (approximately)
+REPLACE INTO `individual_customer` (`customer_id`, `age`) VALUES
 	(1, 45),
 	(2, 35),
 	(3, 21),
@@ -152,14 +171,15 @@ INSERT IGNORE INTO `individual_customer` (`customer_id`, `age`) VALUES
 	(16, 55),
 	(17, 36),
 	(18, 29);
-/*!40000 ALTER TABLE `individual_customer` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.order_placement
+DROP TABLE IF EXISTS `order_placement`;
 CREATE TABLE IF NOT EXISTS `order_placement` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NOT NULL,
-  `wine_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 1,
-  `received` tinyint(1) DEFAULT 0,
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `wine_id` int NOT NULL,
+  `quantity` int NOT NULL DEFAULT '1',
+  `received` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`order_id`),
   KEY `customer_id` (`customer_id`),
   KEY `wine_id` (`wine_id`),
@@ -167,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `order_placement` (
   CONSTRAINT `order_placement_ibfk_2` FOREIGN KEY (`wine_id`) REFERENCES `wine` (`wine_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `order_placement` DISABLE KEYS */;
-INSERT IGNORE INTO `order_placement` (`order_id`, `customer_id`, `wine_id`, `quantity`, `received`) VALUES
+-- Dumping data for table gws_group27vs4.order_placement: ~19 rows (approximately)
+REPLACE INTO `order_placement` (`order_id`, `customer_id`, `wine_id`, `quantity`, `received`) VALUES
 	(1, 7, 33, 1, 0),
 	(2, 11, 25, 4, 1),
 	(3, 4, 11, 20, 20),
@@ -188,17 +208,18 @@ INSERT IGNORE INTO `order_placement` (`order_id`, `customer_id`, `wine_id`, `qua
 	(17, 13, 44, 7, 6),
 	(18, 14, 21, 1, 1),
 	(19, 9, 8, 3, 2);
-/*!40000 ALTER TABLE `order_placement` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.retailer
+DROP TABLE IF EXISTS `retailer`;
 CREATE TABLE IF NOT EXISTS `retailer` (
-  `retailer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `retailer_name` varchar(255) NOT NULL,
-  `retailer_location` varchar(255) NOT NULL,
+  `retailer_id` int NOT NULL AUTO_INCREMENT,
+  `retailer_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `retailer_location` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`retailer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `retailer` DISABLE KEYS */;
-INSERT IGNORE INTO `retailer` (`retailer_id`, `retailer_name`, `retailer_location`) VALUES
+-- Dumping data for table gws_group27vs4.retailer: ~20 rows (approximately)
+REPLACE INTO `retailer` (`retailer_id`, `retailer_name`, `retailer_location`) VALUES
 	(1, 'Lestar Liquor', '1, Lynnpark Shopping Centre, 344 Lynnwood Rd &, King\'s Hwy, Lynnwood, Pretoria, 0081'),
 	(2, 'DON PINO', '431 Marais St, Brooklyn, Pretoria, 0011'),
 	(3, 'Liquor City Groenkloof', 'Groenkloof Plaza, 51 George Storrar St, Groenkloof, Pretoria, 0027'),
@@ -219,23 +240,58 @@ INSERT IGNORE INTO `retailer` (`retailer_id`, `retailer_name`, `retailer_locatio
 	(18, 'CARPE DIEM RESTAURANT & BAR', 'CARPE DIEM RESTAURANT & BAR'),
 	(19, 'Bartinney Wine & Champagne Bar', '5 Bird St, Stellenbosch, Cape Town, 7600'),
 	(20, 'Plaisir Wine and Gin Lounge', ' 6 Bird St, Stellenbosch Central, Stellenbosch, 7600');
-/*!40000 ALTER TABLE `retailer` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.retailer_stock
+DROP TABLE IF EXISTS `retailer_stock`;
+CREATE TABLE IF NOT EXISTS `retailer_stock` (
+  `retailer_id` int NOT NULL,
+  `wine_id` int NOT NULL,
+  PRIMARY KEY (`retailer_id`,`wine_id`),
+  KEY `wine_id` (`wine_id`),
+  CONSTRAINT `retailer_stock_ibfk_1` FOREIGN KEY (`retailer_id`) REFERENCES `retailer` (`retailer_id`) ON DELETE CASCADE,
+  CONSTRAINT `retailer_stock_ibfk_2` FOREIGN KEY (`wine_id`) REFERENCES `wine` (`wine_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table gws_group27vs4.retailer_stock: ~20 rows (approximately)
+REPLACE INTO `retailer_stock` (`retailer_id`, `wine_id`) VALUES
+	(1, 3),
+	(19, 6),
+	(13, 8),
+	(3, 10),
+	(8, 12),
+	(15, 15),
+	(9, 16),
+	(4, 19),
+	(14, 19),
+	(18, 19),
+	(6, 22),
+	(16, 22),
+	(5, 28),
+	(7, 31),
+	(11, 31),
+	(2, 33),
+	(17, 35),
+	(10, 38),
+	(12, 46),
+	(20, 47);
+
+-- Dumping structure for table gws_group27vs4.review
+DROP TABLE IF EXISTS `review`;
 CREATE TABLE IF NOT EXISTS `review` (
-  `review_id` int(11) NOT NULL AUTO_INCREMENT,
-  `wine_id` int(11) NOT NULL,
-  `rate` int(11) DEFAULT NULL,
-  `comment` varchar(255) DEFAULT NULL,
-  `customer_id` int(11) DEFAULT NULL,
+  `review_id` int NOT NULL AUTO_INCREMENT,
+  `wine_id` int NOT NULL,
+  `rate` int DEFAULT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`review_id`),
   KEY `wine_id` (`wine_id`),
-  KEY `customer_id` (`customer_id`),
-  CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `customer_id` (`user_id`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`wine_id`) REFERENCES `wine` (`wine_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2079 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2086 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT IGNORE INTO `review` (`review_id`, `wine_id`, `rate`, `comment`, `customer_id`) VALUES
+-- Dumping data for table gws_group27vs4.review: ~26 rows (approximately)
+REPLACE INTO `review` (`review_id`, `wine_id`, `rate`, `comment`, `user_id`) VALUES
 	(2048, 19, 1, 'Review group: Bad. Reason:The wine was served warm and was not enjoyable.', 18),
 	(2049, 18, 4, 'Review group: Average. Reason:The wine was not the best wine but also not the worst.', 10),
 	(2050, 19, 4, 'Review group: Average Reason:None given', 18),
@@ -255,26 +311,33 @@ INSERT IGNORE INTO `review` (`review_id`, `wine_id`, `rate`, `comment`, `custome
 	(2064, 47, 0, 'Review group: Bad. Reason: volatile acidity.', 13),
 	(2065, 45, 5, 'Review group: Average. Reason: Average wine, great experience.', 11),
 	(2066, 19, 6, 'Review group: Average. Reason: The wine is overpriced ', 9),
-	(2067, 19, 4, 'Review group: Average. Reason: None given', 5);
-/*!40000 ALTER TABLE `review` ENABLE KEYS */;
+	(2067, 19, 4, 'Review group: Average. Reason: None given', 5),
+	(2080, 1, 1, 'bad', 1),
+	(2081, 1, 5, 'good', 1),
+	(2082, 41, 5, 'Not that bad', 1),
+	(2083, 41, 4, 'meh', 1),
+	(2084, 40, 6, 'Not bad', 1),
+	(2085, 20, 0, 'Bad! do not buy', 1);
 
+-- Dumping structure for table gws_group27vs4.user
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `IDX_User_Username` (`username`),
-  CONSTRAINT `CHK_User_EmailFormat` CHECK (`email` regexp '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$'),
-  CONSTRAINT `CHK_User_UsernameFormat` CHECK (!(`username` regexp '[~!@#$%^&*()+={}<>?/\\|]')),
-  CONSTRAINT `CHK_User_LastNameFormat` CHECK (!(`last_name` regexp '[0-9~!@#$%^&*()_+={}<>?/\\|]')),
-  CONSTRAINT `CHK_User_FirstNameFormat` CHECK (!(`first_name` regexp '[0-9~!@#$%^&*()_+={}<>?/\\|]'))
+  CONSTRAINT `CHK_User_EmailFormat` CHECK (regexp_like(`email`,_utf8mb4'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')),
+  CONSTRAINT `CHK_User_FirstNameFormat` CHECK ((not(regexp_like(`first_name`,_utf8mb4'[0-9~!@#$%^&*()_+={}<>?/\\|]')))),
+  CONSTRAINT `CHK_User_LastNameFormat` CHECK ((not(regexp_like(`last_name`,_utf8mb4'[0-9~!@#$%^&*()_+={}<>?/\\|]')))),
+  CONSTRAINT `CHK_User_UsernameFormat` CHECK ((not(regexp_like(`username`,_utf8mb4'[~!@#$%^&*()+={}<>?/\\|]'))))
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT IGNORE INTO `user` (`user_id`, `username`, `first_name`, `last_name`, `email`, `password`) VALUES
+-- Dumping data for table gws_group27vs4.user: ~40 rows (approximately)
+REPLACE INTO `user` (`user_id`, `username`, `first_name`, `last_name`, `email`, `password`) VALUES
 	(1, 'purplemeercat427', 'Emma', ' Heikkila', 'emma.heikkila@example.com', 'viewsoni'),
 	(2, 'crazyfish867', 'Regina', ' Kolb', 'regina.kolb@example.com', 'lakota'),
 	(3, 'silverbutterfly842', 'Alyssa', ' Mathieu', 'alyssa.mathieu@example.com', 'password2'),
@@ -315,20 +378,32 @@ INSERT IGNORE INTO `user` (`user_id`, `username`, `first_name`, `last_name`, `em
 	(38, 'angryleopard316', 'Liam', ' Brown', 'liam.brown@example.com', 'asdf123'),
 	(39, 'ticklishkoala217', 'آدرینا', ' قاسمی', 'adryn.qsmy@example.com', 'hhhhhh'),
 	(40, 'tinygorilla364', 'Annika', ' Balstad', 'annika.balstad@example.com', 'bigfoot');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.user_cart
+DROP TABLE IF EXISTS `user_cart`;
 CREATE TABLE IF NOT EXISTS `user_cart` (
-  `user_id` int(11) NOT NULL,
-  `wine_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 1,
+  `user_id` int NOT NULL,
+  `wine_id` int NOT NULL,
+  `quantity` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`user_id`,`wine_id`),
   KEY `wine_id` (`wine_id`),
   CONSTRAINT `user_cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
   CONSTRAINT `user_cart_ibfk_2` FOREIGN KEY (`wine_id`) REFERENCES `wine` (`wine_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `user_cart` DISABLE KEYS */;
-INSERT IGNORE INTO `user_cart` (`user_id`, `wine_id`, `quantity`) VALUES
+-- Dumping data for table gws_group27vs4.user_cart: ~61 rows (approximately)
+REPLACE INTO `user_cart` (`user_id`, `wine_id`, `quantity`) VALUES
+	(1, 2, 1),
+	(1, 3, 1),
+	(1, 7, 100),
+	(1, 19, 1),
+	(1, 20, 19),
+	(1, 28, 1),
+	(1, 35, 1),
+	(1, 38, 1),
+	(1, 40, 1),
+	(1, 41, 1),
+	(1, 47, 1),
 	(8, 4, 1),
 	(8, 6, 1),
 	(8, 12, 4),
@@ -379,18 +454,19 @@ INSERT IGNORE INTO `user_cart` (`user_id`, `wine_id`, `quantity`) VALUES
 	(35, 30, 4),
 	(35, 39, 1),
 	(35, 47, 4);
-/*!40000 ALTER TABLE `user_cart` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.vineyard_winery
+DROP TABLE IF EXISTS `vineyard_winery`;
 CREATE TABLE IF NOT EXISTS `vineyard_winery` (
-  `winery_id` int(11) NOT NULL,
+  `winery_id` int NOT NULL,
   `reservations` tinyint(1) DEFAULT NULL,
   `tutorials` time DEFAULT NULL,
   PRIMARY KEY (`winery_id`),
   CONSTRAINT `vineyard_winery_ibfk_1` FOREIGN KEY (`winery_id`) REFERENCES `winery` (`winery_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `vineyard_winery` DISABLE KEYS */;
-INSERT IGNORE INTO `vineyard_winery` (`winery_id`, `reservations`, `tutorials`) VALUES
+-- Dumping data for table gws_group27vs4.vineyard_winery: ~17 rows (approximately)
+REPLACE INTO `vineyard_winery` (`winery_id`, `reservations`, `tutorials`) VALUES
 	(2, 2, '01:26:00'),
 	(3, 2, '10:06:00'),
 	(7, 4, '01:55:00'),
@@ -408,24 +484,25 @@ INSERT IGNORE INTO `vineyard_winery` (`winery_id`, `reservations`, `tutorials`) 
 	(28, 1, '12:10:00'),
 	(29, 3, '12:54:00'),
 	(31, 4, '08:26:00');
-/*!40000 ALTER TABLE `vineyard_winery` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.wine
+DROP TABLE IF EXISTS `wine`;
 CREATE TABLE IF NOT EXISTS `wine` (
-  `wine_id` int(11) NOT NULL AUTO_INCREMENT,
-  `wine_name` varchar(255) NOT NULL,
-  `wine_age` int(11) DEFAULT NULL,
-  `bottle_size` varchar(255) NOT NULL DEFAULT '750ml',
-  `wine_type` enum('Red','White','Rose') NOT NULL DEFAULT 'Red',
-  `winery_id` int(11) DEFAULT NULL,
-  `image` varchar(255) DEFAULT 'no-image.jpg',
-  `price` varchar(50) DEFAULT NULL,
+  `wine_id` int NOT NULL AUTO_INCREMENT,
+  `wine_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `wine_age` int DEFAULT NULL,
+  `bottle_size` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '750ml',
+  `wine_type` enum('Red','White','Rose') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Red',
+  `winery_id` int DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT 'no-image.jpg',
+  `price` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`wine_id`),
   KEY `winery_id` (`winery_id`),
   CONSTRAINT `wine_ibfk_1` FOREIGN KEY (`winery_id`) REFERENCES `winery` (`winery_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=557076 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `wine` DISABLE KEYS */;
-INSERT IGNORE INTO `wine` (`wine_id`, `wine_name`, `wine_age`, `bottle_size`, `wine_type`, `winery_id`, `image`, `price`) VALUES
+-- Dumping data for table gws_group27vs4.wine: ~48 rows (approximately)
+REPLACE INTO `wine` (`wine_id`, `wine_name`, `wine_age`, `bottle_size`, `wine_type`, `winery_id`, `image`, `price`) VALUES
 	(1, 'Touché 2012', 11, '750ml', 'Red', 6, 'https://images.vivino.com/thumbs/N6jcUeR6Tq2oA3X6-Nz3gQ_pb_x300.png', 'R300'),
 	(2, 'Family Collection Amarone della Valpolicella 2007', 16, '750ml', 'Red', 25, 'https://images.vivino.com/thumbs/hWDKjQIkT6S029fJaMlj6w_pb_x300.png', 'R300'),
 	(3, 'Emporda 2012', 11, '750ml', 'Red', 11, 'https://images.vivino.com/thumbs/ApnIiXjcT5Kc33OHgNb9dA_375x500.jpg', 'R300'),
@@ -474,20 +551,21 @@ INSERT IGNORE INTO `wine` (`wine_id`, `wine_name`, `wine_age`, `bottle_size`, `w
 	(46, 'Palette Rose 2016', 7, '750ml', 'Rose', 13, 'https://images.vivino.com/thumbs/lnQL_iedQN2WcC2L68IceQ_pb_x300.png', 'R543'),
 	(47, 'Château Romassan Rosé (Coeur de Grain) 2010', 13, '750ml', 'Rose', 19, 'https://images.vivino.com/thumbs/uE0N0zxUS1K36LSWVi_S_Q_pb_x300.png', 'R645'),
 	(48, 'La Villa Rosé 2015', 8, '750ml', 'Rose', 25, 'https://images.vivino.com/thumbs/QNTe2Md7So6KJ9Wz59btzw_pb_x300.png', 'R300');
-/*!40000 ALTER TABLE `wine` ENABLE KEYS */;
 
+-- Dumping structure for table gws_group27vs4.winery
+DROP TABLE IF EXISTS `winery`;
 CREATE TABLE IF NOT EXISTS `winery` (
-  `winery_id` int(11) NOT NULL AUTO_INCREMENT,
-  `winery_name` varchar(255) NOT NULL,
-  `location` varchar(255) DEFAULT NULL,
-  `api_key` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `winery_image` varchar(50) DEFAULT NULL,
+  `winery_id` int NOT NULL AUTO_INCREMENT,
+  `winery_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `location` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `api_key` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `winery_image` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`winery_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3463 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-/*!40000 ALTER TABLE `winery` DISABLE KEYS */;
-INSERT IGNORE INTO `winery` (`winery_id`, `winery_name`, `location`, `api_key`, `password`, `winery_image`) VALUES
+-- Dumping data for table gws_group27vs4.winery: ~32 rows (approximately)
+REPLACE INTO `winery` (`winery_id`, `winery_name`, `location`, `api_key`, `password`, `winery_image`) VALUES
 	(1, 'Gran Moraine', 'United States\n·\nYamhill-Carlton District', 'Gran2321', 'VLskgBPl', 'assets/wineryimages/1.jpg'),
 	(2, 'Van Duzer', 'United States\n·\nWillamette Valley', 'Duzer0754', 'tJzdE2Fg', 'assets/wineryimages/2.jpg'),
 	(3, 'North Valley', 'United States\n·\nWillamette Valley', 'Northgfdu', '9iLTvo3Q', 'assets/wineryimages/3.jpg'),
@@ -520,8 +598,8 @@ INSERT IGNORE INTO `winery` (`winery_id`, `winery_name`, `location`, `api_key`, 
 	(30, 'Darioush', 'United States\n·\nNapa Valley', '57ykgflkgDarioush', 'datrfvkmf', 'assets/wineryimages/30.jpg'),
 	(31, 'Garbole', 'Italy\n·\nVeneto', '75799pGarbole', 'Bhcvj74jf', 'assets/wineryimages/31.jpg'),
 	(32, 'Scarecrow', 'United States\n·\nRutherford', '%6^6hfgjScarecrow', '464hgvmld', 'assets/wineryimages/32.jpg');
-/*!40000 ALTER TABLE `winery` ENABLE KEYS */;
 
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
