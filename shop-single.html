@@ -50,13 +50,14 @@
       
       
     <section class="bg-light" style="display: flex; flex-direction: row;">
-        <div class="card mb-3">
-            <img  style="width: 300px; max-height: 700px;" class="card-img img-fluid" id="image" src="storeAssets/img/product_single_10.jpg" alt="Card image cap" id="product-detail">
+        <div class="card mb-3" style="width: 200px; height: fit-content;">
+            <img  style="width: 88px; max-height: 379px;" class="card-img img-fluid" id="image" src="storeAssets/img/product_single_10.jpg" alt="Card image cap" id="product-detail">
         </div>
         <div class="card-body">
             <h1 class="h2" id="name">Active Wear</h1>
             <p class="h3 py-2" id="price">$25.00</p>
             <p id="retailer">$25.00</p>
+            <p id="winery">$25.00</p>
             <ul class="list-inline">
                 <li class="list-inline-item">
                     <h6>Type:</h6>
@@ -109,6 +110,7 @@
         document.getElementById('age').innerText = wine.wine_age;
         document.getElementById('size').innerText = wine.bottle_size;
         document.getElementById('retailer').innerHTML = "<b>Retailer:</b> "+wine.retailer;
+        document.getElementById('winery').innerHTML = "<b>Winery:</b> "+wine.winery;
         $.ajax({
             url: 'review.php',
             type: 'POST',
