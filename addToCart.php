@@ -15,30 +15,20 @@ $jsonData = file_get_contents('php://input');
 
 $data = json_decode($jsonData, true);
 
-if (isset($data['count'])) {
-    $userId = $data['user_id'];
+$wineId = $data['wine_id'];
+$userId = $data['user_id'];
+$amount = $data['amount'];
 
-    $countQuery = "SELECT COUNT(*) AS wine_count FROM user_cart WHERE user_id = '$userId'";
-    $countResult = mysqli_query($conn, $countQuery);
-    $countRow = mysqli_fetch_assoc($countResult);
-    $wineCount = $countRow['wine_count'];
+$query = "INSERT INTO user_cart (wine_id, user_id, quantity) VALUES ('$wineId', '$userId', '$amount') ON DUPLICATE KEY UPDATE quantity ='$amount'";
 
-    $response = array('status' => 'success', 'message' => 'Wine count retrieved successfully', 'wine_count' => $wineCount);
+if (mysqli_query($conn, $query)) {
+    $response = array('status' => 'success', 'message' => 'Wine added to cart successfully');
     echo json_encode($response);
 } else {
-    $wineId = $data['wine_id'];
-    $userId = $data['user_id'];
-
-    $query = "INSERT INTO user_cart (wine_id, user_id, quantity) VALUES ('$wineId', '$userId', 1)";
-
-    if (mysqli_query($conn, $query)) {
-        $response = array('status' => 'success', 'message' => 'Wine added to cart successfully');
-        echo json_encode($response);
-    } else {
-        $response = array('status' => 'error', 'message' => 'Failed to add wine to cart');
-        echo json_encode($response);
-    }
-
-    mysqli_close($conn);
+    $response = array('status' => 'error', 'message' => 'Failed to add wine to cart');
+    echo json_encode($response);
 }
+
+mysqli_close($conn);
+
 ?>

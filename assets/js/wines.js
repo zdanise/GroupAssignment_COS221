@@ -1,12 +1,34 @@
 let wines=[];
+let orderby='ASC';
+let sortby='wine_name';
+let searchby='';
+let filterby='';
 function fetchData() {
     var xhr = new XMLHttpRequest();
+    let data = {
+        sortby: sortby,
+        orderby: orderby,
+    };
+    
+    if (searchby !== '' && filterby !== '') {
+        data.searchby = searchby;
+        data.filterby = filterby;
+    } else if (searchby === '') {
+        data.filterby = filterby;
+    } else {
+        data.searchby = searchby;
+    }
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
+            console.log(xhr.response);
             $('#row2').empty();
-            wines={};
+            wines = {};
+            if (xhr.response == 'No wines found') {
+                $('#row2').append('<p>************************************' + xhr.response + '***********************************</p>');
+                return;
+            }
+            var response = JSON.parse(xhr.response);
             response.forEach((wine) => {
                 loadWines(wine);
                 wines[wine.wine_id] = wine;
@@ -14,11 +36,17 @@ function fetchData() {
         }
     };
 
-    xhr.open('GET', 'wines.php', true);
-    xhr.send();
+    xhr.open('POST', 'wines.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json'); 
+    xhr.send(JSON.stringify(data));
 }
+
 var user_id;
 window.addEventListener('load',()=>{
+    let orderby='ASC';
+    let sortby='wine_name';
+    let searchby='';
+    let filterby='';
     fetchData();
     user_id=1;
 } );
@@ -53,10 +81,11 @@ function loadWines(wine) {
 
 }
 
-function addToCart(wine_id){
+function addToCart(wine_id, amount=1){
     var jsonData = JSON.stringify({
         wine_id: wine_id,
-        user_id: user_id
+        user_id: user_id,
+        amount: amount
       });
       
       $.ajax({
@@ -75,5 +104,34 @@ function addToCart(wine_id){
         }
       });
       
+}
+
+function addWithQ(){
+    var quantityInput = document.getElementById("quantity");
+    var quantity = quantityInput.value;
+    addToCart(wine.wine_id,quantity);
+}
+
+function setSort(i){
+    sortby=i;
+    fetchData();
+
+}
+function setOrder(i){
+    orderby=i
+    fetchData();
+
+}
+
+function setSearch(){
+    const searchInput = document.getElementById("search");
+    searchby=searchInput.value.trim();
+    fetchData();
+}
+
+function setFilter(i){
+    filterby=i;
+    fetchData();
+
 }
   

@@ -41,8 +41,8 @@
                             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul class="collapse show list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Name</a></li>
-                            <li><a class="text-decoration-none" href="#">Price</a></li>
+                            <li><a class="text-decoration-none" href="#" onclick="setSort('wine_name')">Name</a></li>
+                            <li><a class="text-decoration-none" href="#" onclick="setSort('price')" >Price</a></li>
                         </ul>
                     </li>
                     <li class="pb-3">
@@ -51,8 +51,8 @@
                             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Asc</a></li>
-                            <li><a class="text-decoration-none" href="#">Desc</a></li>
+                            <li><a class="text-decoration-none" href="#" onclick="setOrder('ASC')">Asc</a></li>
+                            <li><a class="text-decoration-none" href="#" onclick="setOrder('DESC')">Desc</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -69,23 +69,23 @@
                         
                         <ul class="list-inline shop-top-menu pb-3 pt-1">
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
+                                <a class="h3 text-dark text-decoration-none mr-3" href="#" onclick="setFilter('')">All</a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#">Red</a>
+                                <a class="h3 text-dark text-decoration-none mr-3" href="#" onclick="setFilter('Red')">Red</a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none" href="#">Rose</a>
+                                <a class="h3 text-dark text-decoration-none" href="#" onclick="setFilter('Rose')">Rose</a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none" href="#">White</a>
+                                <a class="h3 text-dark text-decoration-none" href="#" onclick="setFilter('White')">White</a>
                             </li>
                         </ul>                        
                     </div>
                     <div class="col-md-6 pb-4">
                         <div class="d-flex" style="justify-content: space-evenly;">
-                            <input type="search" placeholder="Enter search..." id="searchbar" style="border-bottom:rgba(83, 81, 84, 0.7) solid thin; width: 90%;">
-                            <i class="fa-solid fa-magnifying-glass" style="color: rgba(83, 81, 84, 0.7)"></i>
+                            <input id="search" type="search" placeholder="Enter search..." id="searchbar" style="border-bottom:rgba(83, 81, 84, 0.7) solid thin; width: 90%;">
+                            <i class="fa-solid fa-magnifying-glass" style="color: rgba(83, 81, 84, 0.7)" onclick="setSearch()"></i>
                         </div>
                     </div>
                 </div>

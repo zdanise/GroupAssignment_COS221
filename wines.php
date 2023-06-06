@@ -12,13 +12,21 @@ if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
 }
 
-$sql = 'SELECT * FROM wine';
+$jsonData = file_get_contents('php://input');
+$data = json_decode($jsonData, true);
+
+$sortby = isset($data['sortby']) ? $data['sortby'] : '';
+$searchby = isset($data['searchby']) ? " AND wine_name LIKE '%" . $data['searchby'] . "%'" : '';
+$filterby = isset($data['filterby']) ? " AND wine_type LIKE '%" . $data['filterby'] . "%'" : '';
+$orderby = isset($data['orderby']) ? $data['orderby'] : '';
+
+$sql = "SELECT * FROM wine WHERE 1=1" . $searchby . $filterby . " ORDER BY " . $sortby . " " . $orderby;
 $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
+if ($result && $result->num_rows > 0) {
     $wines = [];
     while ($row = $result->fetch_assoc()) {
-        $wines[] =$row;
+        $wines[] = $row;
     }
 
     header('Content-Type: application/json');

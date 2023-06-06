@@ -24,6 +24,19 @@
 </head>
 
 <body>
+    <!-- Modal Popup -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel">Items Added</h5>
+        </div>
+        <div class="modal-body">
+            <p>Item have been added to the cart.</p>
+        </div>
+        </div>
+    </div>
+    </div>
     <div id="header-container"></div>
     <script>
     $(function() {
@@ -56,8 +69,8 @@
                     <p class="text-muted" id=""><strong id="size">750ml</strong></p>
                 </li>
             </ul>
-            <input type="number" style="width: 80px;" max="5" min="0" placeholder="Qauntity">
-            <a class="btn btn-success text-white mt-2"><i class="fas fa-cart-plus"></i></a>
+            <input type="number" style="width: 50px;" max="5" min="1" value="1" id="quantity">
+            <a class="btn btn-success text-white mt-2"><i class="fas fa-cart-plus" onclick="addWithQ()"></i></a>
             <style>
                 .btn.btn-success.text-white {
                     background-color: rgb(83, 81, 84) !important;
@@ -68,13 +81,16 @@
 
             </style>
             <p class="py-2">
-                <input type="number" style="width: 52px;" max="5" min="0" placeholder="Rate">
+                <input type="number" style="width: 50px;" max="5" min="0" value="0">
                 <input type="text" placeholder="Enter comment...">
                 <button type="button" class="btn btn-secondary">Submit</button>
             </p>
-            <span class="list-inline-item text-dark">Average rating 4.8</span>
             <h6>Latest comments</h6>
-            <p>first <br> second</p>
+            <div id="comments">
+                <p>first <br> second</p>
+            </div>
+            
+            
         </div>
     </section>
     <script>
@@ -88,7 +104,37 @@
         document.getElementById('type').innerText = wine.wine_type;
         document.getElementById('age').innerText = wine.wine_age;
         document.getElementById('size').innerText = wine.bottle_size;
+        $.ajax({
+            url: 'review.php',
+            type: 'POST',
+            data: JSON.stringify({ wine_id: wine.wine_id, BasedOnwine: 'yes' }),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(response) {
+                var reviews = response.data;
+                var html = '';
+                if (reviews!=undefined){
+                    reviews.forEach((element) => {
+                    console.log(element);
+                    var rating = element.rate;
+                    var comment = element.COMMENT;
+                    var username= element.username;
+                    html += '<p><b>User:</b> '+username+'<br> <b>Rating:</b> ' + rating + '<br> <b>Comment:</b> ' + comment + '<br>------<br></p>';
+                    });
+                } 
+
+                console.log(html);
+                $('#comments').html(html);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+            });
+
+
     </script>
+
+    
 
 </body>
 

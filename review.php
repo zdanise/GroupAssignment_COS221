@@ -6,7 +6,7 @@
 $json = json_decode(file_get_contents('php://input'), true);
 $servername = "127.0.0.1";
 $username = "root";
-$password = "";
+$password = "Tails!=Heads";
 $dbname = "gws_group27vs4"; //please make sure the database name is the same
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -14,7 +14,11 @@ if(isset($json['BasedOnwine'])) {
 
     $wine_id = $json['wine_id'];
 
-    $sql2 = "SELECT rate, wine_id, COMMENT, (SELECT wine_name FROM wine WHERE wine_id=$wine_id) AS wine_name FROM review WHERE wine_id=$wine_id";
+    $sql2 = "SELECT review.rate, review.COMMENT, user.username
+         FROM review
+         JOIN customer ON customer.customer_id = review.customer_id
+         JOIN user ON user.user_id = customer.user_id
+         WHERE review.wine_id = ".$wine_id;
 
     $result = $conn->query($sql2);
     $rowCount = mysqli_num_rows($result);
@@ -103,6 +107,7 @@ else if(isset($json['BasedOnUser']))
 
       
 }
+
 
 
 
