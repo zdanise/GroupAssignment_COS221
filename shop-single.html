@@ -56,6 +56,7 @@
         <div class="card-body">
             <h1 class="h2" id="name">Active Wear</h1>
             <p class="h3 py-2" id="price">$25.00</p>
+            <p id="retailer">$25.00</p>
             <ul class="list-inline">
                 <li class="list-inline-item">
                     <h6>Type:</h6>
@@ -107,6 +108,7 @@
         document.getElementById('type').innerText = wine.wine_type;
         document.getElementById('age').innerText = wine.wine_age;
         document.getElementById('size').innerText = wine.bottle_size;
+        document.getElementById('retailer').innerHTML = "<b>Retailer:</b> "+wine.retailer;
         $.ajax({
             url: 'review.php',
             type: 'POST',

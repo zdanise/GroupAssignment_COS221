@@ -20,7 +20,10 @@ $searchby = isset($data['searchby']) ? " AND wine_name LIKE '%" . $data['searchb
 $filterby = isset($data['filterby']) ? " AND wine_type LIKE '%" . $data['filterby'] . "%'" : '';
 $orderby = isset($data['orderby']) ? $data['orderby'] : '';
 
-$sql = "SELECT * FROM wine WHERE 1=1" . $searchby . $filterby . " ORDER BY " . $sortby . " " . $orderby;
+$sql = "SELECT w.*, (SELECT retailer_name FROM retailer ORDER BY RAND() LIMIT 1) AS retailer
+        FROM wine AS w
+        WHERE 1=1" . $searchby . $filterby . "
+        ORDER BY " . $sortby . " " . $orderby;
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
