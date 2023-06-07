@@ -137,17 +137,18 @@ video {
 /*=============== HEADER ===============*/
 .header {
   width: 100%;
-  position: fixed;
+  position:absolute;
   top: 0;
   left: 0;
   z-index: var(--z-fixed);
   height: 13.5%;
   background: rgba(0,0, 0, 0.5);
+  height: fit-content;
   text-align: center;
 }
 
 .logo{
-  width: 9%;
+  width: 7%;
 }
 
 /*=============== NAV ===============*/

@@ -32,6 +32,7 @@ navLink.forEach(n => n.addEventListener('click', linkAction))
 // pop-up
 function openPopup() {
     document.getElementById("popup").style.display = "block";
+    $("#swiper").hide();
 }
 
 function closePopup() {
@@ -41,202 +42,116 @@ function closePopup() {
 function submitSelection() {
     var comboValue = document.getElementById("combo").value;
     var searchValue = document.getElementById("search").value.trim();
-    if (comboValue !== "All" && searchValue !== "") {
-        var jsonData = {
-            table: comboValue,
-            searchfor: searchValue
-        };
-        console.log(jsonData);
-    }
-    else if (comboValue !== "All"){
-        var jsonData= {
-            table: comboValue,
-        };
-    }
-    else if (searchValue !== ""){
-        var jsonData= {
-            table: "winery",
-            searchfor : searchValue
-        };
+    var jsonData = {};
 
+    if (comboValue !== "All") {
+        jsonData.tables = comboValue;
     }
-    else{
-        var jsonData= {
-            table: "winery"
-        };
 
+    if (searchValue !== "") {
+        jsonData.searchfor = searchValue;
+    
     }
+
+    handleresponse(jsonData);
     closePopup();
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(jsonData),
-    };
 }
 function flipCard(card) {
-    card.getElementsByClassName('card-inner')[0].classList.toggle('flipped');
+    $(card).find('.card-inner').eq(0).toggleClass('flipped');
+}
+
+function addingElements(element){
+    var divElement = $('<div>').addClass('swiper-slide discover__card');
+    var cardInnerElement = $('<div>').addClass('card-inner');
+    var cardFrontElement = $('<div>').addClass('card-front');
+    var imgElement = $('<img>').attr('src', element.image_url).addClass('discover__img');
+    var discoverDataElement = $('<div>').addClass('discover__data');
+    var h2Element = $('<h2>').addClass('discover__title').text(element.winery_name);
+    discoverDataElement.append(h2Element);
+    cardFrontElement.append(imgElement, discoverDataElement);
+    var cardBackElement = $('<div>').addClass('card-back');
+    cardInnerElement.append(cardFrontElement, cardBackElement);
+    divElement.append(cardInnerElement);
+    divElement.on('click', ()=> {flipCard(divElement)});
+    $('.swiper-wrapper').append(divElement);
+    let destiitemsName = $('<h2>').text("Winery name: " + element.winery_name);
+    let destiitemsLocation = $('<p>').text("Location: " + element.location);
+    cardBackElement.append(destiitemsName, destiitemsLocation);
+    cardBackElement.css('flex-direction', 'column');
+    cardBackElement.css('justify-content', 'flex-start');
+    return cardBackElement;
 }
 
   
-function handleresponse(){
-    fetch('destination.php',requestOptions)
-        .then(response => response.json())
-        .then(data => {
-           if(data.type==="Farm")
-           {
+function handleresponse(jsonData) {
+    console.log(jsonData);
+    $.ajax({
+        url: 'destination.php',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(jsonData),
+        success: function(data) {
+            console.log(data);
+            $('.swiper').empty();
+            $(".swipers").hide();
+            $('.swiper').append('<div class="swiper-wrapper"></div>');
+            if (data=="No wines found" || data.data.length==0){
+                const noWines = $('<p>').text("No wineries found");
+                $('.swiper-wrapper').append(noWines);
+                $('.swiper-wrapper').css('justify-content', 'center');
+                $("#swiper").show();
+                return;
+            }
+            $('.swiper').append('<div class="swiper-button-prev swipers"></div>');
+            $('.swiper').append('<div class="swiper-button-next swipers"></div>');
+            $('.swiper').append('<script>\
+                    swiper = new Swiper(".swiper", {\
+                    direction: "horizontal",\
+                    loop: true,\
+                    navigation: {\
+                        nextEl: ".swiper-button-next",\
+                        prevEl: ".swiper-button-prev",\
+                    },\
+                });\
+            </script>');
 
 
+            if (data.type === "farm") {
+                data.data.forEach(element => {
+                    console.log(1);
+                    let card = addingElements(element);
+                    const destiitemsFamily = $('<p>').text("Family: " + element.Family_name);
+                    const destiitemsRestaurant = $('<p>').text("Restaurant: " + element.Restaurant);
+                    $(card).append(destiitemsFamily, destiitemsRestaurant);
+                });
+            } else if (data.type === "vineyard") {
+                data.data.forEach(element => {
+                    let card = addingElements(element);
+                    const destiitemsReservations = $('<p>').text("Available reservations: " + element.Reservations);
+                    const destiitemsTutorial = $('<p>').text("Time: " + element.tutorials);
+                    $(card).append(destiitemsReservations, destiitemsTutorial);
 
-
-
-            const desti = document.getElementById('destination');
-            data.forEach(destiitems => {
-         
-              const destiDiv = document.createElement('div');
-              const destiitemsImage = document.createElement('img');
-              const destiitemsName = document.createElement('h2');
-              const destiitemsLocation = document.createElement('p');
-              const destiitemsFamily = document.createElement('p');
-             
-              
-              destiitemsImage.src = destiitems.data.image_url;
-              destiitemsImage.alt ="destiitems Image";
-              destiitemsName.textContent = "Winery name"+destiitems.data.winery_name;
-            
-              destiitemsLocation.textContent ="Location: " + destiitems.data.location;
-              destiitemsFamily.textContent = "Family: " +destiitems.data.Family_name;
-             
-              
-           
-              destiitemsDiv.appendChild(destiitemsName);
-              destiitemsDiv.appendChild(destiitemsLocation);
-              destiitemsDiv.appendChild(destiitemsImage);
-              destiitemsDiv.appendChild(destiitemsFamily);
-           
-              destiitemsList.appendChild(destiitemsDiv);
-            });
-
-
-
-
-
-
-
-
-
-
-
-
-           }
-
-           else if(data.type==="vineyard")
-           {  
-            
-            
-            const desti = document.getElementById('destination');
-            data.forEach(destiitems => {
-         
-              const destiDiv = document.createElement('div');
-              const destiitemsImage = document.createElement('img');
-              const destiitemsName = document.createElement('h2');
-              const destiitemsLocation = document.createElement('p');
-
-
-              const destiitemsReservations = document.createElement('p');
-              const destiitemsTutorial = document.createElement('p');
-             
-             
-              
-              destiitemsImage.src = destiitems.data.image_url;
-              destiitemsImage.alt ="destiitems Image";
-              destiitemsName.textContent = "Winery name"+destiitems.data.winery_name;
-            
-              destiitemsLocation.textContent ="Location : " + destiitems.data.location;
-              destiitemsReservations.textContent = "Available reservations : " +destiitems.data.Reservations;
-              destiitemsTutorial.textContent = "Time : " +destiitems.data.tutorials;
-             
-           
-              destiitemsDiv.appendChild(destiitemsName);
-              destiitemsDiv.appendChild(destiitemsLocation);
-              destiitemsDiv.appendChild(destiitemsImage);
-              destiitemsDiv.appendChild( destiitemsReservations);
-              destiitemsDiv.appendChild( destiitemsTutorial);
-           
-              destiitemsList.appendChild(destiitemsDiv);
-            });
-
-
-           }
-           else if(data.type==="Everything")
-           {
-
-            const desti = document.getElementById('destination');
-            data.forEach(destiitems => {
-         
-              const destiDiv = document.createElement('div');
-              const destiitemsImage = document.createElement('img');
-              const destiitemsName = document.createElement('h2');
-              const destiitemsLocation = document.createElement('p');
-
-
-              
-             
-              
-              destiitemsImage.src = destiitems.data.image_url;
-              destiitemsImage.alt ="destiitems Image";
-              destiitemsName.textContent = "Winery name  "+destiitems.data.winery_name;
-            
-              destiitemsLocation.textContent ="Location : " + destiitems.data.location;
-             
-             
-           
-              destiitemsDiv.appendChild(destiitemsName);
-              destiitemsDiv.appendChild(destiitemsLocation);
-              destiitemsDiv.appendChild(destiitemsImage);
-           
-              destiitemsList.appendChild(destiitemsDiv);
-            });
-
-           }
-           else if(data.type==="destination")
-           {
-            const desti = document.getElementById('destination');
-            data.forEach(destiitems => {
-         
-              const destiDiv = document.createElement('div');
-              const destiitemsImage = document.createElement('img');
-              const destiitemsName = document.createElement('h2');
-              const destiitemsLocation = document.createElement('p');
-
-
-              const destiitemsBnB = document.createElement('p');
-             
-             
-             
-              
-              destiitemsImage.src = destiitems.data.image_url;
-              destiitemsImage.alt ="destiitems Image";
-              destiitemsName.textContent = "Winery name"+destiitems.data.winery_name;
-            
-              destiitemsLocation.textContent ="Location : " + destiitems.data.location;
-              destiitemsBnB.textContent = "BnB : "+destiitems.data.BnB;
-             
-             
-           
-              destiitemsDiv.appendChild(destiitemsName);
-              destiitemsDiv.appendChild(destiitemsLocation);
-              destiitemsDiv.appendChild(destiitemsImage);
-           
-              destiitemsList.appendChild(destiitemsDiv);
-            });
-           }
-
-          
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+                    
+                });
+            } else if (data.type === "Everything") {
+                data.data.forEach(element => {
+                    console.log(1);
+                    let card = addingElements(element);
+                    $("#swiper").show();
+                    
+                });
+            } else if (data.type === "destination") {
+                data.data.forEach(element => {
+                    let card = addingElements(element);
+                    const destiitemsBnB = $('<p>').text("BnB: " + element.BnB_Name);
+                    $(card).append(destiitemsBnB);
+                });
+            }
+            $("#swiper").show();
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+    
 }
-

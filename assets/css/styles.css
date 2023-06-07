@@ -136,6 +136,7 @@ input {
 
 button {
   cursor: pointer;
+  
 }
 
 input {
@@ -173,7 +174,7 @@ input {
 /*=============== HEADER ===============*/
 .header {
   width: 100%;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: var(--z-fixed);
@@ -190,7 +191,9 @@ input {
 }
 
 .logo{
-  width: 9%;
+  width: 7%;
+  margin-top: 0%;
+  
 }
 
 
@@ -228,6 +231,7 @@ input {
   color: var(--white-color);
   font-weight: var(--font-semi-bold);
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .nav__link:hover {
@@ -250,11 +254,7 @@ input {
   color: white;
 }
 
-/* Change background header */
-.scroll-header {
-  /* background-color: var(--body-color); */
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
-}
+
 
 .scroll-header .nav__logo,
 .scroll-header .nav__toggle {
@@ -278,9 +278,6 @@ input {
 }
 
 /*=============== HOME ===============*/
-.home{
-  box-shadow: 0 0 10px #654b42;
-}
 .home__img {
   position: absolute;
   top: 0;
@@ -362,13 +359,20 @@ input {
   padding: 1rem 2rem;
   font-weight: var(--font-semi-bold);
   transition: .3s;
+  text-decoration: none;
 }
+a.button:hover {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
 
 
 .button--flex {
   display: flex;
   align-items: center;
   column-gap: .25rem;
+  text-decoration: none;
 }
 
 
@@ -416,6 +420,28 @@ input {
 
 /*=============== DISCOVER ===============*/
 /* Add the following CSS styles to your existing stylesheet */
+.swiper-pagination {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  opacity: 0.5;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
 
 .swiper-slide.discover__card {
   perspective: 1000px;
@@ -456,8 +482,8 @@ input {
 }
 
 .swiper {
-  width: 600px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 .discover__card {
@@ -483,7 +509,6 @@ input {
 }
 
 .discover__img {
-  background: url("assets/img/discover2.jpg") no-repeat center center/cover;
   transition: var(--img-transition);
   width: 100%;
   height: 100%;
@@ -577,16 +602,6 @@ input {
   position: relative;
 }
 
-.video__button {
-  position: absolute;
-  right: 1rem;
-  bottom: -1rem;
-  padding: 1rem 1.5rem;
-}
-
-.video__button-icon {
-  font-size: 1.2rem;
-}
 
 
 
@@ -602,6 +617,7 @@ input {
 .footer__copy, .footer__terms-link {
   font-size: var(--small-font-size);
   color: var(--text-color-light);
+  text-decoration: none;
 }
 
 .footer__terms {
@@ -612,6 +628,7 @@ input {
 
 .footer__terms-link:hover {
   color: var(--text-color);
+  text-decoration: none;
 }
 
 /*========== SCROLL UP ==========*/
@@ -700,9 +717,11 @@ input {
   .nav__link {
     color: var(--white-color);
     text-transform: initial;
+    text-decoration: none;
   }
   .nav__link:hover {
     color: var(--white-color);
+    text-decoration: none;
   }
   .nav__dark {
     position: initial;
@@ -726,15 +745,19 @@ input {
   }
   .active-link::before {
     background-color: var(--white-color);
+    text-decoration: none;
   }
   .scroll-header .nav__link {
     color: var(--text-color);
+    text-decoration: none;
   }
   .scroll-header .active-link {
     color: var(--title-color);
+    text-decoration: none;
   }
   .scroll-header .active-link::before {
     background-color: var(--title-color);
+    text-decoration: none;
   }
   .scroll-header .change-theme {
     color: var(--text-color);
@@ -801,11 +824,7 @@ input {
 
 /* For large devices */
 @media screen and (min-width: 1024px) {
-  .header {
-    height: 13.5%;
 
-  }
-  
   .container {
     margin-left: auto;
     margin-right: auto;
@@ -887,3 +906,13 @@ input {
     height: 640px;
   }
 }
+
+
+#successToast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
