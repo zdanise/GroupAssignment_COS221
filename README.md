@@ -21,6 +21,6 @@ can be found in this link: https://www.apachefriends.org/
 database password. There will be a comment to direct you.
 Files-
 1.CSS,HTML,JAVASCRIPT AND PHP files will be put into a zip folder. Assuming you are using XAMPP, extract the zip folder by first going into the following files: C-drive folder>Xampp folder>htdocs>create a folder then extract.
-2.Choose an IDE. Recommended IDE would be VScode. More information on how to install cann be found at: https://code.visualstudio.com/ .
+2.Choose an IDE. Recommended IDE would be VScode. More information on how to install can be found at: https://code.visualstudio.com/ .
 Assuming you downloaded Vscode, open it. Next, in the navigation bar, go to file,click then browse and the open folder where you extracted the zip folder.
-3.Open the Xampp application you installed, press start next to the Apache and and Mysql label. Then next to the Apache label, press admin press,then press the name of the folder you extracted the zip folder then  press the main file (html). Ours will be called .html.
+3.Open the Xampp application you installed, press start next to the Apache and the Mysql label. Then next to the Apache label, press admin press,then press the name of the folder you extracted the zip folder then  press the main file (html). Ours will be called .html.
