@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Winery Catalogue</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hero">
+        <video autoplay loop muted plays-inline class="back-video" >
+            <source src="images/winevideo.mp4" type="video/mp4">
+        </video>
+
+
+        <nav>
+           <img src="images/download.jpeg" class="logo">
+            <ul>
+                <li><a href="#">HOME</a></li> <!--to be confirmed-->
+                <li><a href="#">CONTACT US</a></li> <!--to be confirmed-->
+                <li><a href="#">LOG OUT</a></li><!--to be confirmed-->
+
+            </ul>
+
+        </nav>
+        <div class="content">
+            <br/>
+            <br/>
+            <br/>
+  <h1>Wine Catalog</h1>
+  <div id="wineList"></div>
+
+  <h2>Add Wine</h2>
+  <form id="addForm">
+    <label for="wineName">Name:</label>
+    <br/>
+    <input type="text" id="wineName" required><br>
+
+    <label for="wineAge">Age:</label>
+    <br/>
+    <input type="number" id="wineAge" required><br>
+
+    <label for="bottleSize">Bottle Size:</label>
+    <br/>
+    <input type="text" id="bottleSize" required><br>
+
+    <label for="wineType">Type:</label>
+    <br/>
+    <input type="text" id="wineType" required><br>
+
+   <!-- <label for="wineryId">Winery ID:</label>
+    <br/>
+    <input type="text" id="wineryId" required><br>
+  -->
+
+    <label for="image">Image Link:</label>
+    <br/>
+    <input type="text" id="image" required><br>
+
+    <label for="price">Price:</label>
+    <br/>
+    <input type="number" id="price" required><br>
+    <br/>
+    <button type="submit">Add</button>
+  </form>
+</div>
+  <script src="script.js"></script>
+</div>
+</body>
+</html>

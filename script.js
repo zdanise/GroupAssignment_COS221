@@ -41,7 +41,7 @@ $(document).ready(function() {
   
   function fetchWineList() {
     $.ajax({
-      url: "https://localhost:8000/wines/",
+      url: "http://localhost/wineryLogin.php", 
       type: "GET",
       dataType: "json",
       success: function(data) {
@@ -69,7 +69,7 @@ $(document).ready(function() {
         row.append("<td>" + wine.bottle_size + "</td>");
         row.append("<td>" + wine.wine_type + "</td>");
         row.append("<td>" + wine.winery_id + "</td>");
-        row.append("<td>" + wine.image + "</td>");
+        row.append("<td>" + wine.image + "</td>");//add an image tag
         row.append("<td>" + wine.price + "</td>");
   
         var actionColumn = $("<td>");
@@ -97,7 +97,7 @@ $(document).ready(function() {
   
   function addWine(wine) {
     $.ajax({
-      url: "https://localhost:8000/wines/",
+      url: "http://localhost/wineryLogin.php",
       type: "POST",
       data: JSON.stringify(wine),
       contentType: "application/json",
@@ -110,7 +110,7 @@ $(document).ready(function() {
   
   function updateWine(wineId, updatedWine) {
     $.ajax({
-      url: "https://localhost:8000/wines/" + wineId,
+      url: "http://localhost/wineryLogin.php" + wineId,
       type: "PUT",
       data: JSON.stringify(updatedWine),
       contentType: "application/json",
@@ -122,7 +122,7 @@ $(document).ready(function() {
   
   function deleteWine(wineId) {
     $.ajax({
-      url: "https://localhost:8000/wines/" + wineId,
+      url: "http://localhost/wineryLogin.php" + wineId,
       type: "DELETE",
       success: function(data) {
         fetchWineList();
